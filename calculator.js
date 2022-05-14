@@ -33,10 +33,19 @@ let CalculatorObj = {
 for (let i = 0; i < 10; i++){
     CalculatorObj[i] = i;
 }
+
+//    operators
+//buttons change currentValue
+//after operator pressed
+//  allow input for new currentValue
+//if = or another operator pressed
+//  then change totalValue --> this.operate(this.operation, totalValue, currentValue)
+//  
+//smth smth arrays, reduce with objects
 function calculator (e) {
     const buttonValue = e.target.textContent;
     console.log(buttonValue);
-    if (currentValue != 0) {
+    if (currentValue) {
         currentValue = (currentValue*10) + CalculatorObj[buttonValue];
     } else {
         currentValue = buttonValue;
@@ -46,7 +55,7 @@ function calculator (e) {
 }
 
 function clear() {
-    if (currentValue == 0) {
+    if (!currentValue) {
         totalValue = 0;
     } else {
         currentValue = 0;
