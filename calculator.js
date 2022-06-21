@@ -17,9 +17,11 @@ function divide(a, b) {
 function operate(operator, num1, num2) {
     return operator(num1, num2);
 }
-
+// set value of something to the chosen operator, when another operator is called then evaluate the current value + total and then update total/current
+//can append name of operator to an array and nums (operate function can take that array as input)
 let totalValue = 0;
 let currentValue = 0;
+let operator;
 const display = document.querySelector('#display');
 display.textContent = currentValue;
 
@@ -31,7 +33,7 @@ const clearBtn = document.querySelector('.clear');
 operatorBtn.forEach(button => button.addEventListener('click', operation));
 numberBtn.forEach(button => button.addEventListener('click', appendNum));
 clearBtn.addEventListener('click', clear);
-evalBtn.addEventListener('click', operate);
+evalBtn.addEventListener('click', evaluate);
 //    operators
 //buttons change currentValue
 //after operator pressed
@@ -41,10 +43,24 @@ evalBtn.addEventListener('click', operate);
 //  
 //smth smth arrays, reduce with objects
 /// ** if number is presseed after operator, then show new totalValue as currentValue, / implement this at beginning of number?
+function evaluate (e) {
+    if (!operator) return 'Invalid';
+    totalValue = operate(operator, totalValue, currentValue);
+    display.textContent = totalValue;
+    operator = null;
+}
 function operation (e) {
-    const operator = e.target.textContent;
+    if (!operator) return 'Invalid';
+    totalValue = operate(operator, totalValue, currentValue);
+    display.textContent = totalValue;
+
+    
+    operator = e.target.textContent;
 }
 
+function operatorTrans(symbol) {
+    switch 
+}
 function appendNum(e) {
     const buttonValue = e.target.textContent;
     console.log(buttonValue);
@@ -55,6 +71,7 @@ function appendNum(e) {
     }
     console.log(currentValue);
     display.textContent = currentValue;
+
 }
 function clear() {
     if (!currentValue) {
@@ -67,7 +84,10 @@ function clear() {
 }
 
 function handleKey(e) {
-
+     //if operator --> operation function
+     //if num --> appendNum
+     //if something --> something
+     //update display
 }
 // link buttons
 // add for each button event listener click    their operator
