@@ -64,6 +64,7 @@ function evaluate (e) {
         totalValue = operate(operator, +totalValue, +currentValue);
     }
     display.textContent = totalValue;
+    currentValue = totalValue;
     operator = null;
 }
 
@@ -109,8 +110,8 @@ function appendNum(e) {
         currentValue = buttonValue;
     }
     display.textContent = currentValue;
-
 }
+
 function clear() {
     if (!currentValue) {
         totalValue = 0;
