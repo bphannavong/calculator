@@ -43,23 +43,48 @@ evalBtn.addEventListener('click', evaluate);
 //  
 //smth smth arrays, reduce with objects
 /// ** if number is presseed after operator, then show new totalValue as currentValue, / implement this at beginning of number?
+
+//function to translate text content to function call
+function operatorTrans(symbol) {
+    switch (symbol) {
+        case '+' :
+            return add;
+        case '-':
+            return subtract;
+        case '/':
+            return divide;
+        case 'x':
+            return multiply;
+    }
+}
+
 function evaluate (e) {
-    if (!operator) return 'Invalid';
+    //give answer for operation, and reset operator
     totalValue = operate(operator, totalValue, currentValue);
     display.textContent = totalValue;
     operator = null;
 }
 function operation (e) {
     if (!operator) return 'Invalid';
+
     totalValue = operate(operator, totalValue, currentValue);
     display.textContent = totalValue;
 
     
-    operator = e.target.textContent;
+    operator = operatorTrans(e.target.textContent);
 }
 
 function operatorTrans(symbol) {
-    switch 
+    switch (symbol) {
+        case '+' :
+            return add;
+        case '-':
+            return subtract;
+        case '/':
+            return divide;
+        case 'x':
+            return multiply;
+    }
 }
 function appendNum(e) {
     const buttonValue = e.target.textContent;
