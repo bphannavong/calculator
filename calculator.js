@@ -14,8 +14,8 @@ function divide(a, b) {
     return a / b;
 }
 
-function operate(operator, num1, num2) {
-    return operator(num1, num2);
+function operate(f, num1, num2) {
+    return f(num1, num2);
 }
 // set value of something to the chosen operator, when another operator is called then evaluate the current value + total and then update total/current
 //can append name of operator to an array and nums (operate function can take that array as input)
@@ -60,18 +60,33 @@ function operatorTrans(symbol) {
 
 function evaluate (e) {
     //give answer for operation, and reset operator
-    totalValue = operate(operator, totalValue, currentValue);
+    if (operator) {
+        totalValue = operate(operator, +totalValue, +currentValue);
+    }
     display.textContent = totalValue;
     operator = null;
 }
+
 function operation (e) {
-    if (!operator) return 'Invalid';
-
-    totalValue = operate(operator, totalValue, currentValue);
+    //how to handle if operator doesn't exist vs when operator does
+    //what happens when operator doesnt exist? 
+    //  keeps total the same, sets operator to the corresponding function, and allows for current value to change independent of total
+    //when operator does exist 
+    //  eval will eval the operation
+    //  evaluate the previous operation, display the total value, allow for current value to change
+    //the difference between the two?
+    //  both display totalValue and let current value to change ... 
+    newOperator = operatorTrans(e.target.textContent);
+    totalValue = +totalValue;
+    currentValue = +currentValue;
+    if (operator) {
+        totalValue = operate(operator, totalValue, currentValue);
+    } else {
+        totalValue = currentValue;
+    }
     display.textContent = totalValue;
-
-    
-    operator = operatorTrans(e.target.textContent);
+    currentValue = 0;
+    operator = newOperator;
 }
 
 function operatorTrans(symbol) {
@@ -88,13 +103,11 @@ function operatorTrans(symbol) {
 }
 function appendNum(e) {
     const buttonValue = e.target.textContent;
-    console.log(buttonValue);
-    if (currentValue) {
+    if (currentValue != 0) {
         currentValue = (currentValue*10) + +buttonValue;
     } else {
         currentValue = buttonValue;
     }
-    console.log(currentValue);
     display.textContent = currentValue;
 
 }
@@ -108,12 +121,6 @@ function clear() {
     }
 }
 
-function handleKey(e) {
-     //if operator --> operation function
-     //if num --> appendNum
-     //if something --> something
-     //update display
-}
 // link buttons
 // add for each button event listener click    their operator
 //     add onto the current total
